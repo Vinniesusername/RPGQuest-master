@@ -47,7 +47,6 @@ class Game:
 
     def changeMap(self, map):
         #TODO: fix this
-        print("entered change map")
         self.background = map
         for object in self.tmx_data.objects:
             if "spawnPoint" in object.properties:

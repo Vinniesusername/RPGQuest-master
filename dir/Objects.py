@@ -30,26 +30,6 @@ class GameObjects:
                         self.gameObjs[object.properties["string"]] = x
 
 
-class bigDgKeyChest:
-    def __init__(self, door):
-        self.opened = False
-        self.string = "bigDgKeyChest"
-        self.loot = [door.key, Items.HpPot(2)]
-
-
-    def use(self, player):
-        tempTaken = []
-        for item in self.loot:
-            if player.addItem(item):
-                tempTaken.append(item)
-        if tempTaken == self.loot:
-            self.loot = []
-            self.opened = True
-        else:
-            self.loot = (item for item in self.loot if item not in tempTaken)
-
-
-
 class bigDgRewardChest:
     def __init__(self):
         self.loot = [Items.HpPot(3), Items.HpPot(3), Items.LavaShield()]
@@ -57,22 +37,36 @@ class bigDgRewardChest:
         self.opend = False
         self.goldValue = 500
         self.EXPValue = 2000
+
     def use(self, player):
         tempTaken = []
+        tempTakenStr = ""
         for item in self.loot:
             if player.addItem(item):
                 tempTaken.append(item)
         if tempTaken == self.loot:
             self.loot = []
             self.opened = True
+            for item in tempTaken:
+                tempTakenStr += item.string + " "
         else:
             self.loot = (item for x in self.loot if item not in tempTaken)
         if self.opened:
             self.giveXpandGold(player)
+            print("Chest opened obtained: " + tempTakenStr + " " )
 
     def giveXpandGold(self, player):
         player.gainGold(self.goldValue)
         player.gainEXP(self.EXPValue)
+
+
+class bigDgKeyChest(bigDgRewardChest):
+    def __init__(self, door):
+        bigDgRewardChest.__init__(self)
+        self.opened = False
+        self.string = "bigDgKeyChest"
+        self.loot = [door.key, Items.HpPot(2)]
+
 
 class bigDgChestOne(bigDgRewardChest):
     def __init__(self):
@@ -127,7 +121,6 @@ class bigDgEscape:
 
     def use(self, player):
         self.changeFlag = True
-        print("used")
 
 
 
