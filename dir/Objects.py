@@ -121,6 +121,3 @@ class bigDgEscape:
 
     def use(self, player):
         self.changeFlag = True
-
-
-
