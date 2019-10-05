@@ -28,7 +28,6 @@ class GameObjects:
                 for x in self.totalObjs:
                     if x.string == object.properties["string"]:
                         self.gameObjs[object.properties["string"]] = x
-                        print(x)
 
 
 class bigDgKeyChest:
